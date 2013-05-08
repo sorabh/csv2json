@@ -1,0 +1,413 @@
+-------- 1 - Fields
+Field,Object,Description,possible values,Example,,,,,,,,,,,,,,,,
+created_at,string,UTC time when this transaction was created,,"""created_at"": ""2013-05-04T23:38:15Z"""
+eligible_id,string,unique eligible identification number,,567ecea3-827a-6622-dc7f-d2f93eadf154
+demographics,object,Subscriber and dependent demographic information. If subscriber is passed only subscriber will be filled. If dependent is passed both will be filled.,,"{""demographics"":{""subscriber"":{""last_name"":""FRANKLIN"",""first_name"":""BEN"",""member_id"":""U1231231"",""group_id"":""3207524"",""group_name"":""FOUNDING FATHERS"",""dob"":""1701-10-17"",""gender"":""M"",""address"":{""street_line_1"":""5 FRANKLIN STREET APT"",""street_line_2"":"""",""city"":""SAN FRANCISCO"",""state"":""CA"",""zip"":""94102""}},""dependent"":{}}}"
+primary_insurance,object,,,"{""primary_insurance"":{""name"":""CIGNA"",""id"":""00001"",""contacts"":{""telephone"":""8002446224"",""url"":""cignaforhcp.cigna.com""},""service_providers"":{""physicians"":[]}}}"
+physicians,object,Information on physicians connected to patient's plan.,,"{""service_providers"":{""physicians"":[{""insurance_type"":""PS"",""insurance_type_label"":""Point of Service (POS)"",""primary_care"":""Y"",""restricted"":""N"",""last_name"":""JEFFERSON"",""first_name"":""THOMAS"",""identification_code_qualifier"":"""",""identification_code_label"":"""",""identification_code"":"""",""contacts"":{""telephone"":""6312421181""},""address"":{""street_line_1"":"""",""street_line_2"":"""",""city"":"""",""state"":"""",""zip"":""""},""dates"":{""period_start"":""2010-01-01""},""comments"":[]}]}}"
+primary_care,boolean,indicates if provider is patient's primary care doctor,,"""primary_care"":""Y"""
+restricted,boolean,indicates if patient is restricted to this provider only,,"""restricted"":""N"""
+disclaimer,string,benefit disclaimer from insurance company,free text,"""disclaimer"":[""UNLESS OTHERWISE REQUIRED BY STATE LAW, THIS NOTICE IS NOT A GUARANTEE OF PAYMENT. BENEFITS ARE SUBJECT TO ALL CONTRACT LIMITS AND THE MEMBER'S STATUS ON THE DATE OF SERVICE.ACCUMULATED AMOUNTS SUCH AS DEDUCTIBLE MAY CHANGE AS ADDITIONAL CLAIMS ARE PROCESSED.""]}"
+plan,object,Health benefit plan ,,"{""plan"":{""type"":""30"",""coverage_status"":""1"",""plan_number"":""PPO1Y000"",""plan_name"":""TRADITIONAL BLUE PPO 813 $15/ $15 COPAY"",""group_name"":""""}}"
+coverage_status,string,coverage status codes,see here for all possible coverage_status values,coverage_status: 1
+type,string,service type code,see here for all possible type values,"type:30, type_label: health benefit plan"
+dates,object,type of date and date itself,see here for all possible date values,"{""dates"":{""plan_begin"":""2013-01-01"",""plan_end"":""2013-12-31"",""eligibility_begin"":""2012-01-01""}"
+exclusions,object,noncovered services and limitations of health benefit plan.,sometimes the insurance companies will not pass anything back for exclusions object and you will see all blank values.  blank values DO NOT indicate any information on covered or noncovered services. blank values ONLY indicate that the insurance company just did not pass anything back to us for this.,"""exclusions"":{""noncovered"":[{""type"":""BZ"",""description"":""Physician Visit - Well"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""OUT"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[]},{""type"":""98"",""description"":""Professional (Physician) Visit - Office"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""OUT"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""SPECIALIST""]}]"
+financials,object,,,"{""financials"":{""deductible"":{""remainings"":[],""totals"":[]},""stop_loss"":{""remainings"":[],""totals"":[]},""spending_account"":{""remaining"":[]},""coinsurance"":{""percents"":[]},""copayment"":{""amounts"":[]},""cost_containment"":{""amounts"":[]},""spend_down"":{""amounts"":[]},""limitations"":{""amounts"":[],""disclaimer"":[]},""other_sources"":{""amounts"":[]}}}"
+deductible,object,the total and remaining amounts of the patient's portion of responsibility for a benefit based on the total amount the patient will have to pay before their benefits begins,remaining amounts and total amounts,"""deductible"":{""remainings"":[],""totals"":[]"
+stop_loss,object,"Out of Pocket (Stop Loss) represents the maximum amount of the patient's portion of responsibility before a benefit is covered with no additional payments from the patient, up to the maximum covered by the health plan.",remaining amounts and total amounts,"""stop_loss"":{""remainings"":[],""totals"":[]"
+spend_down,object,Spend Down is typically found in the Medicaid environment and represents the total amount the patient will have to pay out of their own pocket before their benefits begin (which may or may not then require co-insurance or co-payment).,remaining amounts and total amounts,"""spend_down"":{""remainings"":[],""totals"":[]"
+cost_containment,object,Cost Containment is typically found in the Medicaid environment and represents the total amount the patient will have to pay out of their own pocket before their benefits begin (which may or may not then require co-insurance or co-payment).,remaining amounts and total amounts,"""cost_containment"":{""remainings"":[],""totals"":[]"
+remainings,array,"remaining monetary amounts for the patient's deductible, stop loss, and spend down",,"{""remainings"":[{""amount"":""1500"",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":""MA"",""insurance_type_label"":""Medicare Part A"",""pos"":"""",""pos_name"":"""",""comments"":[]}"
+totals,array,"total monetary amounts for the patient's deductible, stop_loss, and cost_containment, & spend_down",,"{""amount"":""500"",""level"":""FAMILY"",""network"":""OUT"",""insurance_type"":""MA"",""insurance_type_label"":""Medicare Part A"",""pos"":"""",""pos_name"":"""",""comments"":[]}]"
+amount,string,monetary amount,negative amounts prohibited,"""amount"":""500"""
+network,boolean,plan network indicator.,"A “IN” value indicates the benefits identified are considered In-Plan-Network. An “OUT” value indicates that the benefits identified are considered Out-Of-Plan-Network. A """" value indicates that the benefits identified were not described by the insurance company as in or out of network.",network: OUT
+level,string,Indicates the level of service provided for this insured.,see here for all possible level values,"""level"":""INDIVIDUAL"""
+insurance_type & insurance_type_label,string,Code identifying the type of insurance policy within a specific insurance program,see here for all possible insurance_type values,"""insurance_type"":""MA"",""insurance_type_label"":Medicare PART A"""
+pos & pos_label,string,Code identifying the place of service related to amount,see here for all possible pos values,"""pos"":11,""pos_name"":""office"""
+comments,string,All free text messages given by insurance company related to amount,,"""comments"": [  ""HRA BALANCE"" ]"
+authorization_required,boolean,Code identifying if an authorization code must be obtained before any services are rendered,"A “TRUE” value indicates that the benefits require an authorization code prior to being administered. An “FALSE” value indicates that the benefits do not require an authorization code prior to being administered. A """" value indicates that the insurance company did not return information on whether or not an authorization is required.","""authorization_required"":""TRUE"""
+limitations,object,monetary limiations on a benefit plan or specific benefit service
+services,array,list of services. If no service_type_code is specified in query then we will list a generic 30 code list of services defined here. If an explicit service_type_code is specified then we will give back a list of codes that pertain to that service only. ,,"{""services"":[{""type"":""1"",""description"":""Medical Care"",""coverage_status"":""1"",""facility"":{""amounts"":[]},""noncovered"":[],""benefit_details"":{""benefit_description"":{""amounts"":[]},""managed_care"":{""amounts"":[]},""unlimited"":{""amounts"":[]}},""financials"":{""deductible"":{""remainings"":[],""totals"":[]},""stop_loss"":{""remainings"":[],""totals"":[]},""spending_account"":{""remaining"":[]},""coinsurance"":{""percents"":[]},""copayment"":{""amounts"":[]},""cost_containment"":{""amounts"":[]},""spend_down"":{""amounts"":[]},""limitations"":{""amounts"":[],""disclaimer"":[]},""other_sources"":{""amounts"":[]}},""visits"":{""amounts"":[]},""additional_insurance"":[]},{""type"":""33"",""description"":""Chiropractic"",""coverage_status"":""1"",""facility"":{""amounts"":[]},""noncovered"":[],""benefit_details"":{""benefit_description"":{""amounts"":[]},""managed_care"":{""amounts"":[]},""unlimited"":{""amounts"":[]}},""financials"":{""deductible"":{""remainings"":[],""totals"":[]},""stop_loss"":{""remainings"":[],""totals"":[]},""spending_account"":{""remaining"":[]},""coinsurance"":{""percents"":[{""percent"":"".2"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""Specialist""]},{""percent"":"".2"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""PCP""]},{""percent"":"".4"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""OUT"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""Specialist""]},{""percent"":"".4"",""time_period"":"""",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""OUT"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""PCP""]}]},""copayment"":{""amounts"":[]},""cost_containment"":{""amounts"":[]},""spend_down"":{""amounts"":[]},""limitations"":{""amounts"":[],""disclaimer"":[]},""other_sources"":{""amounts"":[]}},""visits"":{""amounts"":[{""amount"":"""",""time_period"":""23"",""time_period_label"":""calendar_year"",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""quantity_type"":""VS"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""Specialist""]},{""amount"":"""",""time_period"":""23"",""time_period_label"":""calendar_year"",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""quantity_type"":""VS"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""PCP""]},{""amount"":"""",""time_period"":""23"",""time_period_label"":""calendar_year"",""level"":""INDIVIDUAL"",""network"":""OUT"",""insurance_type"":"""",""insurance_type_label"":"""",""quantity_type"":""VS"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""Specialist""]},{""amount"":"""",""time_period"":""23"",""time_period_label"":""calendar_year"",""level"":""INDIVIDUAL"",""network"":""OUT"",""insurance_type"":"""",""insurance_type_label"":"""",""quantity_type"":""VS"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""PCP""]}]},""additional_insurance"":[]},"
+facility,object,"list benefit information connected to hospitals, hospice care, and other facilities. ",
+copayment,object,"The co-payment amount is typically a fixed amount and is customarily collected upon receipt of service (however the requirements may vary from plan to plan). For example, a patient may have a $10 co-payment for a physician office visit or a $50 co-payment for an Emergency Room visit. ",
+coinsurance,object,Co-Insurance represents the patient's portion of responsibility for a benefit and is represented as a percentage,
+visits,object,"days, visits, episodes, occurences etc allowed per time_period for a particular service",
+amounts,array,"list of monetary and visit amounts for copay, coinsurance, and visits allowed.",,"{""amounts"":[{""amount"":""20"",""time_period"":""27"",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":""MB"",""insurance_type_label"":""Medicare Part B"",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[]},{""amount"":""25"",""time_period"":""27"",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[""SPECIALIST""]}]"
+time_period,string,defines a time period for the benefit being described,see here for all possible time_period values,"""time_period"": ""32"", ""time_period_label"":""lifetime"""
+benefit_description,object,,,"{""benefit_details"":{""benefit_description"":{""amounts"":[]},""managed_care"":{""amounts"":[]},""unlimited"":{""amounts"":[]}},"
+unlimited,array,details on unlimited benefit information,,"{""unlimited"":{""amounts"":[{""amount"":"""",""time_period"":""32"",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""IN"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[]},{""amount"":"""",""time_period"":""32"",""time_period_label"":"""",""level"":""INDIVIDUAL"",""network"":""OUT"",""insurance_type"":"""",""insurance_type_label"":"""",""pos"":"""",""pos_name"":"""",""authorization_required"":"""",""comments"":[]}]}"
+managed_care,array,details on managed care coordination
+coverage_basis,array,details on coverage basis information
+-------- 2 - coverage_status
+code,label
+1,Active Coverage
+2,Active - Full Risk Capitation
+3,Active - Services Capitated
+4,Active - Services Capitated to Primary Care Physician
+5,Active - Pending Investigation
+6,Inactive
+7,Inactive - Pending Eligibility Update
+8,Inactive - Pending Investigation
+9,Not-Covered
+10,Cannot process
+11,The insurance company ignored your request for information on this service code and responded back with no information at all for it. NOTE** this DOES NOT indicate any coverage information on the code. It just indicates the insurance company completely ignored your request.
+12,Not deemed a medical nessity
+13,Second surgical opinion required
+14,Card reported stolen 
+15,contact following entity for coverage info
+-------- 3 - type
+type_label,Parent,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child,Child
+Medical Care,1,2,42,45,69,76,83,AG,BT,BU,DM,73,3,4,5,12,18,54,69,83
+Surgical,2,7,8,20,97
+Consultation,3
+Diagnostic X-Ray,4
+Diagnostic Lab,5
+Radiation Therapy,6
+Anesthesia,7
+Surgical Assistance,8
+Other Medical,9
+Blood Charges,10
+Used Durable Medical Equipment,11
+Durable Medical Equipment Purchase,12
+Ambulatory Service Center Facility,13
+Renal Supplies in the Home,14
+Alternate Method Dialysis,15
+Chronic Renal Disease (CRD) Equipment,16
+Pre-Admission Testing,17
+Durable Medical Equipment Rental,18
+Pneumonia Vaccine,19
+Second Surgical Opinion,20
+Third Surgical Opinion,21
+Social Work,22
+Diagnostic Dental,23
+Periodontics,24
+Restorative,25
+Endodontics,26
+Maxillofacial Prosthetics,27
+Adjunctive Dental Services,28
+Health Benefit Plan Coverage,30,1,33,35,47,51,52,86,88,98,AL,BZ,MH,UC,48,50,42
+Benefit Disclaimer,31,,,,,,,,,,,,,
+Plan Waiting Period,32
+Chiropractic,33,4
+Chiropractic Office Visits,34
+Dental Care,35,24,25,26,27,28,36,37,38,39,40,41,4,7,25
+Dental Crowns,36
+Dental Accident,37
+Orthodontics,38
+Prosthodontics,39
+Oral Surgery,40
+Routine Preventive Dental,41
+Home Health Care,42,A3
+Home Health Prescriptions,43
+Home Health Visits,44
+Hospice,45
+Respite Care,46
+Hospital,47,51,52,53,48,50,17,47
+Hospital - Inpatient,48,99
+Hospital - Room and Board,49
+Hospital - Outpatient,50,51,52,A0
+Hospital - Emergency Accident,51
+Hospital - Emergency Medical,52
+Hospital - Ambulatory Surgical,53
+Long Term Care,54
+Major Medical,55
+Medically Related Transportation,56
+Air Transportation,57
+Cabulance,58
+Licensed Ambulance,59
+General Benefits,60
+In-vitro Fertilization,61
+MRI/CAT Scan,62
+Donor Procedure,63
+Acupuncture,64
+Newborn Care,65
+Pathology,66
+Smoking Cessation,67
+Well Baby Care,68,80,BH
+Maternity,69
+Transplants,70
+Audiology Exam,71
+Inhalation Therapy,72
+Diagnostic Medical,73,4,5,62
+Private Duty Nursing,74
+Prosthetic Device,75
+Dialysis,76
+Otological Exam,77
+Chemotherapy,78
+Allergy Testing,79
+Immunizations,80
+Routine Physical,81
+Family Planning,82,61,83,84
+Infertility,83,61
+Abortion,84
+HIV - AIDS Treatment,85
+Emergency Services,86,51,52,98
+Cancer Treatment,87
+Pharmacy,88,89,90,91,92,BW,BX,GF,GN
+Free Standing Prescription Drug,89
+Mail Order Prescription Drug,90
+Brand Name Prescription Drug,91
+Generic Prescription Drug,92
+Podiatry,93
+Podiatry - Office Visits,94
+Podiatry - Nursing Home Visits,95
+Professional (Physician),96,99,A0,A1,A3,
+Anesthesiologist,97
+Professional (Physician) Visit - Office,98,BZ,BY
+Professional (Physician) Visit - Inpatient,99
+Professional (Physician) Visit - Outpatient,A0
+Professional (Physician) Visit - Nursing Home,A1
+Professional (Physician) Visit - Skilled Nursing Facility,A2
+Professional (Physician) Visit - Home,A3
+Psychiatric,A4
+Psychiatric - Room and Board,A5
+Psychotherapy,A6
+Psychiatric - Inpatient,A7,A6
+Psychiatric - Outpatient,A8,A6
+Rehabilitation,A9,AB,AC,AD,AE,AF,BF,BG,
+Rehabilitation - Room and Board,AA
+Rehabilitation - Inpatient,AB
+Rehabilitation - Outpatient,AC
+Occupational Therapy,AD
+Physical Medicine,AE
+Speech Therapy,AF
+Skilled Nursing Care,AG,,,,
+Skilled Nursing Care - Room and Board,AH,,,,
+Substance Abuse,AI,AJ,AK,,
+Alcoholism Treatment,AJ,,,,
+Drug Addiction,AK,,,,
+Optometry Vision,AL,AM,AN,AO,
+Frames,AM,,,,
+Routine Exam,AN,,,,
+Lenses,AO,,,,
+Routine Eye Exam,AP,,,,
+Nonmedically Necessary Physical,AQ,,,,
+Experimental Drug Therapy,AR,,,,
+Burn Care,B1,,,,
+Brand Name Prescription Drug - Formulary,B2,,,,
+Brand Name Prescription Drug - Non-Formulary,B3,,,,
+Independent Medical Evaluation,BA,,,,
+Psychiatric Treatment Partial Hospitalization,BB,,,,
+Day Care (Psychiatric),BC,,,,
+Cognitive Therapy,BD,,,,
+Massage Therapy,BE,,,,
+Pulmonary Rehabilitation,BF,,,,
+Cardiac Rehabilitation,BG,,,,
+Pediatric,BH,4,12,98,
+Nursery Room and Board,BI,73,98,BG,
+Skin,BJ,,,,
+Orthopedic,BK,4,5,98,
+Cardiac,BL,,,,
+Lymphatic,BM,4,5,98,
+Gastrointestinal,BN,,,,
+Endocrine,BP,,,,
+Neurology,BQ,,,,
+Eye,BR,,,,
+Invasive Procedures,BS,,,,
+Gynecological,BT,,,,
+Obstetrical,BU,,,,
+Obstetrical/Gynecological,BV,BT,BU,,
+Mail Order Prescription Drug: Brand Name,BW,,,,
+Mail Order Prescription Drug: Generic,BX,,,,
+Physician Visit - Sick,BY,,,,
+Physician Visit - Well,BZ,,,,
+Coronary Care,C1,,,,
+Private Duty Nursing - Inpatient,CA,,,,
+Private Duty Nursing - Home,CB,,,,
+Surgical Benefits - Professional (Physician),CC,,,,
+Surgical Benefits - Facility,CD,,,,
+Mental Health Provider - Inpatient,CE,,,,
+Mental Health Provider - Outpatient,CF,,,,
+Mental Health Facility - Inpatient,CG,,,,
+Mental Health Facility - Outpatient,CH,,,,
+Substance Abuse Facility - Inpatient,CI,,,,
+Substance Abuse Facility - Outpatient,CJ,,,,
+Screening X-ray,CK,,,,
+Screening laboratory,CL,,,,
+"Mammogram, High Risk Patient",CM,,,,
+"Mammogram, Low Risk Patient",CN,,,,
+Flu Vaccination,CO,,,,
+Eyewear Accessories,CP,,,,
+Case Management,CQ,,,,
+Dermatology,DG,,,,
+Durable Medical Equipment,DM,12,18,,
+Diabetic Supplies,DS,,,,
+Generic Prescription Drug - Formulary,GF,,,,
+Generic Prescription Drug - Non-Formulary,GN,,,,
+Allergy,GY,,,,
+Intensive Care,IC,,,,
+Mental Health,MH,CE,CF,CG,CH,A4,A5,A6,A7,A8,AI,AJ,AK,4,5,22,BB,BC
+Neonatal Intensive Care,NI,,,,
+Oncology,ON,,,,
+Physical Therapy,PT,,,,
+Pulmonary,PU,,,,
+Renal,RN,,,,
+Residential Psychiatric treatment,RT,,,,
+Transitional Care,TC,,,,
+Transitional Nursery Care,TN,,,,
+Urgent Care,UC,,,,
+-------- 4 - dates
+dates
+discharge
+period_start
+period_end
+completion
+cob
+plan
+benefit
+primary_care_provider
+latest_visit 
+eligibility
+added
+plan_begin
+benefit_begin
+benefit_end
+eligibility_begin
+eligibility_end
+admission
+service
+last_update
+-------- 5 - level
+level
+Children Only
+Dependents Only
+Employee and Children
+Employee Only
+Employee and Spouse
+Family
+Individual 
+Spouse and Children
+Spouse Only
+-------- 6 - insurance_type
+insurance_type,description 
+12,Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan
+13,Medicare Secondary End-Stage Renal Disease Beneficiary in the Mandated Coordination Period
+14,"Medicare Secondary, No-fault Insurance including Auto is Primary"
+15,Medicare Secondary Worker’s Compensation
+16,Medicare Secondary Public Health Service (PHS)or Other Federal Agency
+41,Medicare Secondary Black Lung
+42,Medicare Secondary Veteran’s Administration
+43,Medicare Secondary Disabled Beneficiary Under Age 65 with Large Group Health Plan (LGHP)
+47,"Medicare Secondary, Other Liability Insurance is Primary"
+AP,Auto Insurance Policy
+C1,Commercial
+CO,Consolidated Omnibus Budget Reconciliation Act (COBRA)
+CP,Medicare Conditionally Primary
+D,Disability
+DB,Disability Benefits
+EP,Exclusive Provider Organization
+FF,Family or Friends
+GP,Group Policy
+HM,Health Maintenance Organization (HMO)
+HN,Health Maintenance Organization (HMO) - Medicare Risk
+HS,Special Low Income Medicare Beneficiary
+IN,Indemnity
+IP,Individual Policy
+LC,Long Term Care
+LD,Long Term Policy
+LI,Life Insurance
+LT,Litigation
+MA,Medicare Part A
+MB,Medicare Part B
+MC,Medicaid
+MH,Medigap Part A
+MI,Medigap Part B
+MP,Medicare Primary
+OT,Other
+PE,Property Insurance - Personal
+PL,Personal
+PP,Personal Payment (Cash - No Insurance)
+PR,Preferred Provider Organization (PPO)
+PS ,Point of Service (POS)
+QM,Qualified Medicare Beneficiary
+RP,Property Insurance - Real
+SP,Supplemental Policy
+TF,Tax Equity Fiscal Responsibility Act (TEFRA) 
+WC,Workers Compensation
+WU,Wrap Up Policy
+-------- 7 - pos
+pos (place_of_service),pos_label
+1,Pharmacy
+3,School
+4,Homeless Shelter
+9,Prison/ Correctional Facility
+11,Office
+12,Home
+13,Assisted Living Facility
+14,Group Home 
+15,Mobile Unit
+16,Temporary Lodging
+17,Walk-in Retail Health Clinic
+18,Place of Employment-Worksite
+20,Urgent Care Facility
+21,Inpatient Hospital
+22,Outpatient Hospital
+23,Emergency Room – Hospital
+24,Ambulatory Surgical Center
+25,Birthing Center
+26,Military Treatment Facility
+31,Skilled Nursing Facility
+32,Nursing Facility
+33,Custodial Care Facility
+34,Hospice
+41,Ambulance - Land
+42,Ambulance – Air or Water
+49,Independent Clinic
+50,Federally Qualified Health Center
+51,Inpatient Psychiatric Facility
+52,Psychiatric Facility-Partial Hospitalization
+53,Community Mental Health Center
+54,Intermediate Care Facility/Mentally Retarded
+55,Residential Substance Abuse Treatment Facility
+56,Psychiatric Residential Treatment Center
+57,Non-residential Substance Abuse Treatment Facility
+60,Mass Immunization Center
+61,Comprehensive Inpatient Rehabilitation Facility
+62,Comprehensive Outpatient Rehabilitation Facility
+65,End-Stage Renal Disease Treatment Facility
+71,Public Health Clinic
+72,Rural Health Clinic
+81,Independent Laboratory
+99,Other Place of Service
+-------- 8 - time_period
+,code,value
+,6,Hour
+,7,Day
+,13,24 Hours
+,21,Years
+,22,Service Year
+,23,Calendar Year
+,24,Year to Date
+,25,Contract
+,26,Episode
+,27,Visit
+,28,Outlier
+,29,Remaining
+,30,Exceeded
+,31,Not Exceeded
+,32,Lifetime
+,33,Lifetime Remaining
+,34,Month
+,35,Week
+,36,Admission
+-------- 9 - qualifier
+,,,,,,,,,,,,,,,,,,,,qualifier,Full_form
+,,,,,,,,,,,,,,,,,,,,8H,Minimum
+,,,,,,,,,,,,,,,,,,,,99,Quantity Used
+,,,,,,,,,,,,,,,,,,,,CA,Covered - Actual
+,,,,,,,,,,,,,,,,,,,,CE,Covered - Estimated
+,,,,,,,,,,,,,,,,,,,,D3,Number of Co-insurance Days
+,,,,,,,,,,,,,,,,,,,,DB,Deductible Blood Units
+,,,,,,,,,,,,,,,,,,,,DY,Days
+,,,,,,,,,,,,,,,,,,,,HS,Days
+,,,,,,,,,,,,,,,,,,,,LA,Life-time Reserve - Actual
+,,,,,,,,,,,,,,,,,,,,LE,Life-time Reserve - Estimated
+,,,,,,,,,,,,,,,,,,,,M2,Maximum
+,,,,,,,,,,,,,,,,,,,,MN,Month
+,,,,,,,,,,,,,,,,,,,,P6,Number of Services or Procedures
+,,,,,,,,,,,,,,,,,,,,QA,Quantity Approved
+,,,,,,,,,,,,,,,,,,,,S7,"Age, High Value"
+,,,,,,,,,,,,,,,,,,,,S8,"Age, Low Value"
+,,,,,,,,,,,,,,,,,,,,VS,Visits
+,,,,,,,,,,,,,,,,,,,,YY,Years
